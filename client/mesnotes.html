@@ -1,0 +1,75 @@
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>mesnotes</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+</head>
+<body>
+	<header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
+	  	<div class="container">
+    		<div class="navbar-header">
+  				<a class="showNodes navbar-brand" href="#">Mes Notes</a>
+  			</div>
+  			<nav class="collapse navbar-collapse bs-navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li><a class="makeNewNote" href="#">Nouvelle note</a></li>
+						<li><a class="login" href="#">Connexion</a></li>
+					</ul>
+				</nav>
+  		</div>
+  	</header>
+
+	{{#if checkEditMode 'login'}}
+  	<div class="container">
+  		{{> login}}
+  	</div>
+	{{/if}}
+  	{{#if checkEditMode 'edit'}}
+  	<div class="container">
+  		{{> newnote}}
+  	</div>
+	{{/if}}
+	{{#if checkEditMode 'notes'}}
+  	<div class="container">
+  	  {{#each notes}}
+        {{> note}}
+      {{/each}}
+  	</div>
+  	{{/if}}
+</body>
+
+<template name="newnote">
+	<div class="panel panel-default">
+		  <div class="panel-heading">Nouvel article</div>
+		  <div class="formulaire">
+	  <form class="new-task">
+	  	<div class="form-group">
+	 		<label for="title">Titre</label>
+	 		<input type="text" name="title" class="title form-control" placeholder="Titre" aria-describedby="basic-addon2">
+		</div>
+		<div class="form-group">
+	 		<label for="description">Sujet</label>
+	 		<textarea name="description" class=" description form-control" placeholder="Titre" aria-describedby="basic-addon2"></textarea>	
+		</div>
+		<div class="form-group text-right">
+			<button type="button" class="ajouter btn btn-primary active">Ajouter</button>
+		</div>
+	  </form>
+	</div>
+	</div>
+</template>
+
+<template name="note">
+	<div class="article">
+		<div>
+			<h3 class="titre">{{subject}}</h3>
+			<div class="action" data-id="{{_id}}">
+				<div class="glyphicon glyphicon-pencil"></div>
+				<div class="glyphicon glyphicon-remove"></div>
+			</div>	
+		</div>
+		<p class="description text-muted clearfix">
+	  		{{subject}}
+	  	</p>
+	</div>
+</template>

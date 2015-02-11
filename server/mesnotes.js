@@ -1,5 +1,7 @@
 ;(function () {
   "use strict";
+
+
 ////////////////////////////////////////////////////////////////////
 // Patches
 //
@@ -17,6 +19,7 @@ console = {
 Meteor.startup(function () {
 
   Meteor.secrets = new Meteor.Collection('secrets');
+  Meteor.Notes = new Mongo.Collection("notes");
 
 ////////////////////////////////////////////////////////////////////
 // Create Test Secrets
@@ -98,8 +101,9 @@ Meteor.methods({
       throw new Meteor.Error("not-logged-in",
         "Must be logged in to post a comment.");
     }
-
-    Notes.insert({
+    console.log(Meteor.Notes);
+console.log(Meteor.Notes.find().fetch());
+    Meteor.Notes.insert({
       subject : title,
       description : description,
       createdAt : new Date()
@@ -107,7 +111,23 @@ Meteor.methods({
   
     return true;
   },
+  doLogin: function (username, password) {
+    // Check argument types
+    check(username, String);
+    check(password, String);
 
+    var user = Meteor.users.findOne({profile :{name:username}});
+    
+    console.log('Result : ', Accounts._checkPassword(user, password));
+    console.log(Meteor.users.find().fetch());
+    if(typeof(user)!=="undefined"
+       && user!=null){
+      this.userId = user._id;
+    }else{
+      throw new Meteor.Error("not-logged-in",
+        "Identifiant ou mot de passe incorrect");    
+    }
+  }
 })
 
 }());

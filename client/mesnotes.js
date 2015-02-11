@@ -1,5 +1,5 @@
 //var Notes = new Mongo.Collection("notes");
-
+var Notes = new Mongo.Collection("notes");
 if (Meteor.isClient) {
 
   Template.body.helpers({
@@ -46,8 +46,7 @@ if (Meteor.isClient) {
           if (error) {
             alert(error);
           } else {
-            alert(result);
-            Session.set("editMode", false);
+            Session.set("editMode", "notes");
           }
         });
 /*
